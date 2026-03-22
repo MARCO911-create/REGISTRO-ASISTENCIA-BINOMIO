@@ -8,6 +8,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    
+    <!-- OneSignal SDK -->
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+    <script>
+      window.OneSignalDeferred = window.OneSignalDeferred || [];
+      OneSignalDeferred.push(async function(OneSignal) {
+        await OneSignal.init({
+          appId: "39da69fe-2549-45f0-8dba-6fe1ad24a24c",
+          safari_web_id: "web.onesignal.auto.67c39979-7446-4274-a748-fcdf2406257a",
+          notifyButton: {
+            enable: true,
+          },
+        });
+      });
+    </script>
+    
     <!-- Firebase SDK modular -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -2248,11 +2264,11 @@ Generado: ${new Date().toLocaleString()}
             
             if (diasMostrar.length === 0) {
                 tbody.innerHTML = `
-                      <tr>
+                       <tr>
                         <td colspan="9" style="text-align: center; padding: 25px; color: var(--color-text-muted);">
                             No hay registros para mostrar
-                           </td>
-                       </tr>
+                            </td>
+                        </tr>
                 `;
                 actualizarResumenPago(0, 0);
                 return;
