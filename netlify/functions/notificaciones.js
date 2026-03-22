@@ -1,22 +1,36 @@
 exports.handler = async () => {
-  // TUS DATOS REALES DE ONESIGNAL
+  // DATOS REALES DE TU CUENTA ONESIGNAL
   const APP_ID = "39da69fe-2549-45f0-8dba-6fe1ad24a24c";
-  // La API KEY la encuentras en OneSignal: Ajustes (Settings) > Keys & IDs > REST API KEY
-  const API_KEY = "TU_REST_API_KEY_AQUI"; 
+  const API_KEY = "os_v2_app_hhngt7rfjfc7bdn2n7q22jfcjth3b6i3736ujmm7s4wjm33dzhdpfgl7qihyrckj7xznp3oeyp2iwuchycrozabjph3mtpxiai2f67i";
 
-  const d = new Date(); d.setUTCHours(d.getUTCHours() - 4);
+  // AJUSTE DE HORA BOLIVIA (GMT-4)
+  const d = new Date(); 
+  d.setUTCHours(d.getUTCHours() - 4); 
   const h = d.getHours();
   
+  // LOGICA DE MENSAJES SEGÚN EL HORARIO
+  let titulo = "Chala App 📲";
   let msj = "🔔 ¡Anatulio, hora de marcar entrada! 🚀";
-  if (h >= 12 && h < 14) msj = "🍔 ¡Buen provecho! Registra tu salida. 🥗";
-  if (h >= 18) msj = "🌙 ¡Misión cumplida! Marca tu salida. 🎉";
-
-  const body = {
-    app_id: APP_ID,
-    included_segments: ["Total Subscriptions"],
-    contents: { "es": msj },
-    headings: { "es": "Chala App 📲" }
-  };
+  
+  if (h >= 10 && h < 12) { 
+      titulo = "Enfoque Binomio ✨"; 
+      msj = "¡La disciplina es el puente entre metas y logros! 💪"; 
+  } else if (h >= 12 && h < 14) { 
+      titulo = "Hora de Almuerzo 🍔"; 
+      msj = "¡Buen provecho! Registra tu salida a almorzar. 🥗"; 
+  } else if (h >= 14 && h < 16) { 
+      titulo = "Retorno al Turno 💼"; 
+      msj = "¡De vuelta al ruedo! Registra tu reingreso. ✨"; 
+  } else if (h >= 16 && h < 18) { 
+      titulo = "Energía de Tarde 🔥"; 
+      msj = "¡No te detengas, vas por excelente camino! 🏆"; 
+  } else if (h >= 18 && h < 20) { 
+      titulo = "Fin de Jornada 🎉"; 
+      msj = "¡Misión cumplida! Registra tu salida y descansa. 🌙"; 
+  } else if (h >= 20) { 
+      titulo = "Reflexión del Día 🌙"; 
+      msj = "¡Día superado! Disfruta tu descanso, te lo ganaste. ✨"; 
+  }
 
   try {
     const res = await fetch("https://onesignal.com/api/v1/notifications", {
@@ -25,10 +39,17 @@ exports.handler = async () => {
         "Content-Type": "application/json; charset=utf-8",
         "Authorization": `Basic ${API_KEY}`
       },
-      body: JSON.stringify(body)
+      body: JSON.stringify({
+        app_id: APP_ID,
+        included_segments: ["Total Subscriptions"],
+        contents: { "es": msj },
+        headings: { "es": titulo }
+      })
     });
-    return { statusCode: 200, body: "Notificación enviada" };
+    
+    const data = await res.json();
+    return { statusCode: 200, body: "Enviado con éxito: " + msj };
   } catch (e) {
-    return { statusCode: 500, body: e.message };
+    return { statusCode: 500, body: "Error: " + e.message };
   }
 };
