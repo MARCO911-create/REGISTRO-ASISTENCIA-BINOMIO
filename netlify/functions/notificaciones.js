@@ -1,6 +1,6 @@
 exports.handler = async () => {
   // CONFIGURACIÓN DE TELEGRAM
-  const TOKEN = "8610559332:AAEo25sbSRNX7smFCK8Zf0kang0cd_kpFTQ";
+  const TOKEN = "8610559332:AAEo25sbSRNX7smFCK8ZfOkangOcd_kpFTQ";
   const CHAT_ID = "5149244973";
 
   // AJUSTE DE HORA BOLIVIA (GMT-4)
