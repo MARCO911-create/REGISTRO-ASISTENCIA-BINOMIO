@@ -1,7 +1,6 @@
 exports.handler = async () => {
   const APP_ID = "39da69fe-2549-45f0-8dba-6fe1ad24a24c";
-  // CLAVE CORREGIDA EXACTA DE TU FOTO
-  const API_KEY = "os_v2_app_hhngt7rfjfc7bdn2n7q22jfcjrlyi52hniiez6fpz7zo2azo2fc5gvwalcxnmbzrqk3pxb6dh3g23zgqojd65r4y2274zupesyqak7a";
+  const API_KEY = "os_v2_app_hhngt7rfjfcjrlyi52hniiez6fpz7zo2azo2fc5gvwalcxnmbzrqk3pxb6dh3g23zgqojd65r4y2274zupesyqak7a";
 
   const d = new Date(); 
   d.setUTCHours(d.getUTCHours() - 4); 
@@ -26,7 +25,8 @@ exports.handler = async () => {
       },
       body: JSON.stringify({
         app_id: APP_ID,
-        included_segments: ["Subscribed Users", "Total Subscriptions"], 
+        // LA RED GIGANTE: Atrapa a tu celular sin importar en qué grupo lo metió OneSignal
+        included_segments: ["Subscribed Users", "Active Users", "All"], 
         contents: { "en": msj, "es": msj }, 
         headings: { "en": titulo, "es": titulo }
       })
@@ -34,9 +34,10 @@ exports.handler = async () => {
     
     const data = await res.json();
     
+    // Imprimimos la respuesta completa para ver si OneSignal se está quejando de algo más
     return { 
       statusCode: 200, 
-      body: "Éxito. Notificación enviada a " + (data.recipients || 0) + " celular(es)."
+      body: "Éxito. Enviado a: " + (data.recipients || 0) + " celular(es). Detalle: " + JSON.stringify(data)
     };
   } catch (e) {
     return { statusCode: 500, body: "Error: " + e.message };
