@@ -1,6 +1,11 @@
 exports.handler = async () => {
   const APP_ID = "39da69fe-2549-45f0-8dba-6fe1ad24a24c";
-  const API_KEY = "os_v2_app_hhngt7rfjfc7bdn2n7q22jfcjq3zvjfir7resavso3br36x27symp4n2k432ciu6wonlo3mou7n3y5mrugggakkwkbxsy3hervmnsbq"; // <--- PEGA TU CLAVE AQUÍ ADENTRO
+  
+  // SOLO REEMPLAZA EL TEXTO DE ADENTRO, NO BORRES LAS COMILLAS
+  const API_KEY = "os_v2_app_hhngt7rfjfc7bdn2n7q22jfcjrj7uhoso5bebpvslqrdjrcmqocotz655uhf5tria3jmnrcxtqsgrdglbhzwbd72pt322mkxaceouci"; 
+
+  // Esta línea destruye cualquier espacio invisible o error de copiado
+  const cleanKey = API_KEY.trim();
 
   const d = new Date(); 
   d.setUTCHours(d.getUTCHours() - 4); 
@@ -21,7 +26,7 @@ exports.handler = async () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json; charset=utf-8",
-        "Authorization": "Basic " + API_KEY
+        "Authorization": "Basic " + cleanKey
       },
       body: JSON.stringify({
         app_id: APP_ID,
@@ -33,9 +38,10 @@ exports.handler = async () => {
     
     const data = await res.json();
     
+    // Este mensaje nos dirá exactamente cómo está llegando tu clave
     return { 
       statusCode: 200, 
-      body: "Éxito. Enviado a: " + (data.recipients || 0) + " celular(es). Detalle: " + JSON.stringify(data)
+      body: "Resultado: " + (data.recipients || 0) + " celulares. | Log: " + JSON.stringify(data) + " | Clave detectada empieza con: [" + cleanKey.substring(0, 15) + "] de " + cleanKey.length + " caracteres."
     };
   } catch (e) {
     return { statusCode: 500, body: "Error: " + e.message };
