@@ -1,43 +1,28 @@
 exports.handler = async () => {
   const APP_ID = "39da69fe-2549-45f0-8dba-6fe1ad24a24c";
-  
-  // TU NUEVA CLAVE MAESTRA INSERTADA AQUÍ:
   const API_KEY = "os_v2_app_hhngt7rfjfc7bdn2n7q22jfcjrj7uhoso5bebpvslqrdjrcmqocotz655uhf5tria3jmnrcxtqsgrdglbhzwbd72pt322mkxaceouci"; 
-
-  const d = new Date(); 
-  d.setUTCHours(d.getUTCHours() - 4); 
-  const h = d.getHours();
-  
-  let titulo = "Chala App 📲";
-  let msj = "🔔 ¡Anatulio, hora de marcar entrada! 🚀";
-  
-  if (h >= 10 && h < 12) { titulo = "Enfoque Binomio ✨"; msj = "¡La disciplina es el puente entre metas y logros! 💪"; }
-  else if (h >= 12 && h < 14) { titulo = "Hora de Almuerzo 🍔"; msj = "¡Buen provecho! Registra tu salida a almorzar. 🥗"; }
-  else if (h >= 14 && h < 16) { titulo = "Retorno al Turno 💼"; msj = "¡De vuelta al ruedo! Registra tu reingreso. ✨"; }
-  else if (h >= 16 && h < 18) { titulo = "Energía de Tarde 🔥"; msj = "¡No te detengas, vas por excelente camino! 🏆"; }
-  else if (h >= 18 && h < 20) { titulo = "Fin de Jornada 🎉"; msj = "¡Misión cumplida! Registra tu salida y descansa. 🌙"; }
-  else if (h >= 20 || h < 6) { titulo = "Reflexión del Día 🌙"; msj = "¡Día superado! Disfruta tu descanso. ✨"; }
 
   try {
     const res = await fetch("https://onesignal.com/api/v1/notifications", {
       method: "POST",
       headers: {
         "Content-Type": "application/json; charset=utf-8",
-        "Authorization": "Basic " + API_KEY.trim()
+        "Authorization": "Basic " + API_KEY
       },
       body: JSON.stringify({
         app_id: APP_ID,
-        included_segments: ["Subscribed Users", "Active Users", "All"], 
-        contents: { "en": msj, "es": msj }, 
-        headings: { "en": titulo, "es": titulo }
+        included_segments: ["Subscribed Users", "Total Subscriptions"], 
+        contents: { "en": "Prueba de conexión", "es": "Prueba de conexión" }, 
+        headings: { "en": "Chala App", "es": "Chala App" }
       })
     });
     
+    // Aquí capturamos la verdad sin maquillar
     const data = await res.json();
     
     return { 
       statusCode: 200, 
-      body: "Éxito total. Enviado a " + (data.recipients || 0) + " celular(es)." 
+      body: "RESPUESTA DE ONESIGNAL: " + JSON.stringify(data)
     };
   } catch (e) {
     return { statusCode: 500, body: "Error: " + e.message };
