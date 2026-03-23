@@ -25,9 +25,11 @@ exports.handler = async () => {
       },
       body: JSON.stringify({
         app_id: APP_ID,
-        included_segments: ["Subscribed Users"], 
-        contents: { "es": msj }, 
-        headings: { "es": titulo }
+        // Mandamos a los dos posibles nombres de grupo para no fallar
+        included_segments: ["Total Subscriptions", "Subscribed Users"], 
+        // Agregamos "en" como salvavidas obligatorio
+        contents: { "en": msj, "es": msj }, 
+        headings: { "en": titulo, "es": titulo }
       })
     });
     
