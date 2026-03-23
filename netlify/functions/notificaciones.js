@@ -1,30 +1,50 @@
 exports.handler = async () => {
   const APP_ID = "39da69fe-2549-45f0-8dba-6fe1ad24a24c";
-  const API_KEY = "os_v2_app_hhngt7rfjfc7bdn2n7q22jfcjrj7uhoso5bebpvslqrdjrcmqocotz655uhf5tria3jmnrcxtqsgrdglbhzwbd72pt322mkxaceouci"; 
+  
+  // ¡PEGA TU NUEVA CLAVE AQUÍ ADENTRO!
+  const API_KEY = "os_v2_app_hhngt7rfjfc7bdn2n7q22jfcjralseha3cqennuocvwxjlrnrijetdzauqmjf7z34l6gkeb4d4ztj46yehshpq5hskks5kvjrfy3hwq"; 
+
+  const d = new Date(); 
+  d.setUTCHours(d.getUTCHours() - 4); 
+  const h = d.getHours();
+  
+  let titulo = "Chala App 📲";
+  let msj = "🔔 ¡Anatulio, hora de marcar entrada! 🚀";
+  
+  if (h >= 10 && h < 12) { titulo = "Enfoque Binomio ✨"; msj = "¡La disciplina es el puente entre metas y logros! 💪"; }
+  else if (h >= 12 && h < 14) { titulo = "Hora de Almuerzo 🍔"; msj = "¡Buen provecho! Registra tu salida a almorzar. 🥗"; }
+  else if (h >= 14 && h < 16) { titulo = "Retorno al Turno 💼"; msj = "¡De vuelta al ruedo! Registra tu reingreso. ✨"; }
+  else if (h >= 16 && h < 18) { titulo = "Energía de Tarde 🔥"; msj = "¡No te detengas, vas por excelente camino! 🏆"; }
+  else if (h >= 18 && h < 20) { titulo = "Fin de Jornada 🎉"; msj = "¡Misión cumplida! Registra tu salida y descansa. 🌙"; }
+  else if (h >= 20 || h < 6) { titulo = "Reflexión del Día 🌙"; msj = "¡Día superado! Disfruta tu descanso. ✨"; }
 
   try {
     const res = await fetch("https://onesignal.com/api/v1/notifications", {
       method: "POST",
       headers: {
         "Content-Type": "application/json; charset=utf-8",
-        "Authorization": "Basic " + API_KEY
+        "Authorization": "Basic " + API_KEY.trim()
       },
       body: JSON.stringify({
         app_id: APP_ID,
-        included_segments: ["Subscribed Users", "Total Subscriptions"], 
-        contents: { "en": "Prueba de conexión", "es": "Prueba de conexión" }, 
-        headings: { "en": "Chala App", "es": "Chala App" }
+        included_segments: ["Subscribed Users", "Active Users", "All"], 
+        contents: { "en": msj, "es": msj }, 
+        headings: { "en": titulo, "es": titulo }
       })
     });
     
-    // Aquí capturamos la verdad sin maquillar
     const data = await res.json();
+    
+    // Si la clave sigue mal, imprimirá el error. Si está bien, dirá Éxito.
+    if (data.errors) {
+       return { statusCode: 200, body: "Error de OneSignal: " + JSON.stringify(data.errors) };
+    }
     
     return { 
       statusCode: 200, 
-      body: "RESPUESTA DE ONESIGNAL: " + JSON.stringify(data)
+      body: "Éxito total. Enviado a " + (data.recipients || 0) + " celular(es)." 
     };
   } catch (e) {
-    return { statusCode: 500, body: "Error: " + e.message };
+    return { statusCode: 500, body: "Error crítico: " + e.message };
   }
 };
