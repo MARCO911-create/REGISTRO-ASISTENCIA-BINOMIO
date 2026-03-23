@@ -3,7 +3,7 @@ exports.handler = async () => {
   const APP_ID = "39da69fe-2549-45f0-8dba-6fe1ad24a24c";
   
   // USA LA CLAVE QUE TERMINA EN "qak7a" (la de tu captura 1000217860.jpg)
-  const API_KEY = "os_v2_app_hhngt7rfjfc7bdn2n7q22jfcjrlyi52hniiez6fpz7zo2azo2fc5gvwalcxnmbzrqk3pxb6dh3g23zgqojd65r4y2274zupesyqak7a";
+  const API_KEY = "os_v2_app_hhngt7rfjfc7bdn2n7q22jfcjqlfh5gy73leo44rl5dm2am3gs3u6iwfesi2jb3sqsvdif55fx6aizcoso3mnv2uxgcgxolmab5le3i";
 
   const headers = {
     "Content-Type": "application/json; charset=utf-8",
