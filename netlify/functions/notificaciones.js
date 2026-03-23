@@ -1,7 +1,6 @@
 exports.handler = async () => {
   const APP_ID = "39da69fe-2549-45f0-8dba-6fe1ad24a24c";
-  // LA CLAVE AHORA SÍ ESTÁ COMPLETA
-  const API_KEY = "os_v2_app_hhngt7rfjfc7bdn2n7q22jfcjrlyi52hniiez6fpz7zo2azo2fc5gvwalcxnmbzrqk3pxb6dh3g23zgqojd65r4y2274zupesyqak7a";
+  const API_KEY = "os_v2_app_hhngt7rfjfc7bdn2n7q22jfcjq3zvjfir7resavso3br36x27symp4n2k432ciu6wonlo3mou7n3y5mrugggakkwkbxsy3hervmnsbq"; // <--- PEGA TU CLAVE AQUÍ ADENTRO
 
   const d = new Date(); 
   d.setUTCHours(d.getUTCHours() - 4); 
