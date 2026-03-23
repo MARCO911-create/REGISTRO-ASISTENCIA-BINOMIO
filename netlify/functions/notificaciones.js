@@ -1,6 +1,7 @@
 exports.handler = async () => {
   const APP_ID = "39da69fe-2549-45f0-8dba-6fe1ad24a24c";
-  const API_KEY = "os_v2_app_hhngt7rfjfc7bdn2n7q22jfcjruypgtgj2weql45twmd4exzsjyqkdvtpt5gk6j6pzxo2c373e2a7jsyztcvypnh2hxs4syu7fc7bti";
+  // AQUÍ ESTÁ TU CLAVE NUEVA DE LA CAPTURA
+  const API_KEY = "os_v2_app_hhngt7rfjfc7bdn2n7q22jfcjrlyi52hniiez6fpz7zo2azo2fc5gvwalcxnmbzrqk3pxb6dh3g23zgqojd65r4y2274zupesyqak7a";
 
   const d = new Date(); 
   d.setUTCHours(d.getUTCHours() - 4); 
@@ -25,9 +26,7 @@ exports.handler = async () => {
       },
       body: JSON.stringify({
         app_id: APP_ID,
-        // Mandamos a los dos posibles nombres de grupo para no fallar
-        included_segments: ["Total Subscriptions", "Subscribed Users"], 
-        // Agregamos "en" como salvavidas obligatorio
+        included_segments: ["Subscribed Users", "Total Subscriptions"], 
         contents: { "en": msj, "es": msj }, 
         headings: { "en": titulo, "es": titulo }
       })
@@ -40,9 +39,6 @@ exports.handler = async () => {
       body: "Éxito. Notificación enviada a " + (data.recipients || 0) + " celular(es)."
     };
   } catch (e) {
-    return { 
-      statusCode: 500, 
-      body: "Error de servidor: " + e.message 
-    };
+    return { statusCode: 500, body: "Error: " + e.message };
   }
 };
